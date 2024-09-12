@@ -15615,13 +15615,72 @@ class="
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Question-4.">Question 4.<a class="anchor-link" href="#Question-4.">&#182;</a></h1><p><strong>Consider a Gaussian random variable $\mathbf{x} = (x_1, x_2)^T$ with the mean $\mathbf{\mu}$ and the covariance matrix $\mathbf{\Sigma}$ being in the following form,</strong>
-$$ \mathbf{\mu} = \begin{pmatrix} \mathbf{\mu_1}\\ \mathbf{\mu_2} \end{pmatrix}, \quad \mathbf{\Sigma} = \begin{pmatrix} \mathbf{\Sigma_{11}} &amp; \mathbf{\Sigma_{12}}\\ \mathbf{\Sigma_{21}} &amp; \mathbf{\Sigma_{22}} \end{pmatrix} $$
-<strong>where $\mathbf{x}_1$ and $\mathbf{x}_2$ are multi-dimensional.</strong></p>
+<h1 id="Question-4.">Question 4.<a class="anchor-link" href="#Question-4.">&#182;</a></h1><p><strong>Consider a Gaussian random variable $\mathbf{x} = (\mathbf{x_1}, \mathbf{x_2})^T$ with the mean $\mathbf{\mu}$ and the covariance matrix $\mathbf{\Sigma}$ being in the following form,</strong>
+$$ \mathbf{\mu} = \begin{bmatrix} \mathbf{\mu_1}\\ \mathbf{\mu_2} \end{bmatrix}, \quad \mathbf{\Sigma} = \begin{bmatrix} \mathbf{\Sigma_{11}} &amp; \mathbf{\Sigma_{12}}\\ \mathbf{\Sigma_{21}} &amp; \mathbf{\Sigma_{22}} \end{bmatrix} $$
+<strong>where $\mathbf{x_1}$ and $\mathbf{x_2}$ are multi-dimensional.</strong></p>
 <p><strong>Show that the conditional desntiy is then given by:</strong>
-$$ p(\mathbf{x}_1 | \mathbf{x}_2) \sim \mathcal{N}(\bar{\mathbf{\mu}}, \bar{\mathbf{\Sigma}}) $$
+$$ p(\mathbf{x_1} | \mathbf{x_2}) \sim \mathcal{N}(\bar{\mathbf{\mu}}, \bar{\mathbf{\Sigma}}) $$
 <strong>where</strong>
-$$ \bar{\mathbf{\mu}} = \mathbf{\mu}_1 + \mathbf{\Sigma_{12}}\mathbf{\Sigma_{22}^{-1}}(\mathbf{x_2} - \mathbf{\mu_2}) \quad \text{and} \quad \bar{\mathbf{\Sigma}} = \mathbf{\Sigma_{11}} - \mathbf{\Sigma_{12}}\mathbf{\Sigma_{22}^{-1}}\mathbf{\Sigma_{21}} $$</p>
+$$ \bar{\mathbf{\mu}} = \mathbf{\mu_1} + \mathbf{\Sigma_{12}}\mathbf{\Sigma_{22}^{-1}}(\mathbf{x_2} - \mathbf{\mu_2}) \quad \text{and} \quad \bar{\mathbf{\Sigma}} = \mathbf{\Sigma_{11}} - \mathbf{\Sigma_{12}}\mathbf{\Sigma_{22}^{-1}}\mathbf{\Sigma_{21}} $$</p>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Let $\mathbf{x_1} \sim \mathcal{N}(\mu_1, \mathbf{\Sigma}_{11}) \in \mathbb{R}^n$ and $\mathbf{x_2} \sim \mathcal{N}(\mu_2, \bm{\Sigma}_{22}) \in \mathbb{R}^m$, then we have that:
+$$ \mathbf{x} \sim \mathcal{N}(\mathbf{\mu}, \mathbf{\Sigma}) = (\mathbf{x_1}, \mathbf{x_2})^T \in \mathbb{R}^{n+m} $$</p>
+<p>The conditional probability distrbution can be written as:
+$$ p(\mathbf{x_1} | \mathbf{x_2}) = \frac{p(\mathbf{x_1}, \mathbf{x_2})}{p(\mathbf{x_2})} = \frac{\mathcal{N}(\mathbf{\mu}, \mathbf{\Sigma})}{\mathcal{N}(\mathbf{\mu_2}, \mathbf{\Sigma_{22}})} $$</p>
+<p>Solving for the above, we have that:
+\begin{equation*}
+    \begin{split}
+        p(\bm{x_1} | \bm{x_2}) &amp;= \frac{\frac{1}{\sqrt{(2\pi)^{n+m}|\mathbf{\Sigma}|}} \cdot \text{exp}\big[-\frac{1}{2}(\mathbf{x}-\mu)^T \mathbf{\Sigma}^{-1} (\mathbf{x} - \mu)\big]}{\frac{1}{\sqrt{(2\pi)^{n}|\mathbf{\Sigma}|}} \cdot \text{exp}\big[-\frac{1}{2}(\mathbf{x_2}-\mu_2)^T \mathbf{\Sigma_{22}}^{-1} (\mathbf{x_2} - \mu_2)\big]}\\
+        &amp;= \sqrt{\frac{|\mathbf{\Sigma}_{22}|}{(2\pi)^{m} \cdot |\mathbf{\Sigma}|}} \cdot \text{exp}\big(-\frac{1}{2}(\mathbf{x}-\mu)^T \Sigma^{-1} (\mathbf{x} - \mu) + \frac{1}{2}(\mathbf{x_2}-\mu_2)^T \mathbf{\Sigma_{22}}^{-1} (\mathbf{x_2} - \mu_2)\big)\\
+        &amp;= \sqrt{\frac{|\mathbf{\Sigma}_{22}|}{(2\pi)^{m} \cdot |\mathbf{\Sigma}|}} \cdot \text{exp}\bigg(-\frac{1}{2}\bigg(\begin{bmatrix} \mathbf{x_1}\\ \mathbf{x_2} \end{bmatrix}- \begin{bmatrix} \mathbf{\mu_1}\\ \mathbf{\mu_2} \end{bmatrix}\bigg)^T \mathbf{\Sigma}^{-1} \bigg(\begin{bmatrix} \mathbf{x_1}\\ \mathbf{x_2} \end{bmatrix}- \begin{bmatrix} \mathbf{\mu_1}\\ \mathbf{\mu_2} \end{bmatrix}\bigg) + \frac{1}{2}(\mathbf{x_2}-\mu_2)^T \mathbf{\Sigma_{22}}^{-1} (\mathbf{x_2} - \mu_2)\bigg)\\
+        &amp;= \sqrt{\frac{|\mathbf{\Sigma}_{22}|}{(2\pi)^{m} \cdot |\mathbf{\Sigma}|}} \cdot \text{exp}\bigg(-\frac{1}{2}\bigg(\begin{bmatrix} \mathbf{x_1} - \mu_1\\ \mathbf{x_2} - \mu_2 \end{bmatrix}^T \mathbf{\Sigma}^{-1} \begin{bmatrix} \mathbf{x_1} - \mu_1\\ \mathbf{x_2} - \mu_2 \end{bmatrix} \bigg) + \frac{1}{2}(\mathbf{x_2}-\mu_2)^T \mathbf{\Sigma_{22}}^{-1} (\mathbf{x_2} - \mu_2)\bigg)\\
+        &amp;= \sqrt{\frac{|\mathbf{\Sigma}_{22}|}{(2\pi)^{m} \cdot |\mathbf{\Sigma}|}} \cdot \text{exp}\bigg(-\frac{1}{2}\bigg(\begin{bmatrix} \mathbf{x_1} - \mu_1\\ \mathbf{x_2} - \mu_2 \end{bmatrix}^T \begin{bmatrix} \mathbf{\Sigma_{11}} &amp; \mathbf{\Sigma_{12}}\\ \mathbf{\Sigma_{21}} &amp; \mathbf{\Sigma_{22}} \end{bmatrix}^{-1} \begin{bmatrix} \mathbf{x_1} - \mu_1\\ \mathbf{x_2} - \mu_2 \end{bmatrix} \bigg) + \frac{1}{2}(\mathbf{x_2}-\mu_2)^T \mathbf{\Sigma_{22}}^{-1} (\mathbf{x_2} - \mu_2)\bigg)\\
+    \end{split}
+\end{equation*}</p>
+<p>To compute $\mathbf{\Sigma}^{-1}$,  we apply theorem 2.1 of the following paper cited <a href="http://msvlab.hre.ntou.edu.tw/grades/now/inte/Inverse%20%26%20Border/border-LuTT.pdf">here</a> which provide explicit formulae to compute inverses for $2 \times 2$ block matrices.</p>
+$$ \mathbf{\Sigma}^{-1} = \begin{bmatrix} \mathbf{\Sigma_{11}} &amp; \mathbf{\Sigma_{12}}\\ \mathbf{\Sigma_{21}} &amp; \mathbf{\Sigma_{22}} \end{bmatrix}^{-1} = \begin{bmatrix} (\mathbf{\Sigma_{11}} - \mathbf{\Sigma_{12}}\mathbf{\Sigma_{22}}^{-1}\mathbf{\Sigma_{21}})^{-1} &amp; -(\mathbf{\Sigma_{11}} - \mathbf{\Sigma_{12}}\mathbf{\Sigma_{22}}^{-1}\mathbf{\Sigma_{21}})^{-1}\mathbf{\Sigma_{12}}\mathbf{\Sigma_{22}}^{-1}\\ -\mathbf{\Sigma_{22}}^{-1}\mathbf{\Sigma_{21}}(\mathbf{\Sigma_{11}} - \mathbf{\Sigma_{12}}\mathbf{\Sigma_{22}}^{-1}\mathbf{\Sigma_{21}})^{-1} &amp; \mathbf{\Sigma_{22}}^{-1} + \mathbf{\Sigma_{22}}^{-1}\mathbf{\Sigma_{21}}(\mathbf{\Sigma_{11}} - \mathbf{\Sigma_{12}}\mathbf{\Sigma_{22}}^{-1}\mathbf{\Sigma_{21}})^{-1}\mathbf{\Sigma_{12}}\mathbf{\Sigma_{22}}^{-1}
+\end{bmatrix} $$<p>Now, we can see that:
+\begin{equation*}
+    \begin{split}
+        \begin{bmatrix} 
+        \mathbf{\Sigma_{11}} &amp; \mathbf{\Sigma_{12}}\\ 
+        \mathbf{\Sigma_{21}} &amp; \mathbf{\Sigma_{22}}
+        \end{bmatrix}^{-1} 
+        &amp;= \begin{bmatrix} 
+            \mathbf{x_1} - \mu_1\\ 
+            \mathbf{x_2} - \mu_2 
+            \end{bmatrix}^T 
+            \begin{bmatrix} 
+            (\mathbf{\Sigma_{11}} - \mathbf{\Sigma_{12}}\mathbf{\Sigma_{22}}^{-1}\mathbf{\Sigma_{21}})^{-1} &amp; -(\mathbf{\Sigma_{11}} - \mathbf{\Sigma_{12}}\mathbf{\Sigma_{22}}^{-1}\mathbf{\Sigma_{21}})^{-1}\mathbf{\Sigma_{12}}\mathbf{\Sigma_{22}}^{-1}\\
+            -\mathbf{\Sigma_{22}}^{-1}\mathbf{\Sigma_{21}}(\mathbf{\Sigma_{11}} - \mathbf{\Sigma_{12}}\mathbf{\Sigma_{22}}^{-1}\mathbf{\Sigma_{21}})^{-1} &amp; \mathbf{\Sigma_{22}}^{-1} + \mathbf{\Sigma_{22}}^{-1}\mathbf{\Sigma_{21}}(\mathbf{\Sigma_{11}} - \mathbf{\Sigma_{12}}\mathbf{\Sigma_{22}}^{-1}\mathbf{\Sigma_{21}})^{-1}\mathbf{\Sigma_{12}}\mathbf{\Sigma_{22}}^{-1} \end{bmatrix} \begin{bmatrix} \mathbf{x_1} - \mu_1\\ \mathbf{x_2} - \mu_2 \end{bmatrix}\\
+            \\
+        &amp;= \begin{bmatrix} 
+            (\mathbf{x_1} - \mu_1)^T (\mathbf{\Sigma_{11}} - \mathbf{\Sigma_{12}}\mathbf{\Sigma_{22}}^{-1}\mathbf{\Sigma_{21}})^{-1} + (\mathbf{x_2} - \mu_2)^T \big(-\mathbf{\Sigma_{22}}^{-1}\mathbf{\Sigma_{21}}(\mathbf{\Sigma_{11}} - \mathbf{\Sigma_{12}}\mathbf{\Sigma_{22}}^{-1}\mathbf{\Sigma_{21}})\big)^{-1}\\
+            (\mathbf{x_1} - \mu_1)^T\big(-(\mathbf{\Sigma_{11}} - \mathbf{\Sigma_{12}}\mathbf{\Sigma_{22}}^{-1}\mathbf{\Sigma_{21}})^{-1}\mathbf{\Sigma_{12}}\mathbf{\Sigma_{22}}^{-1}\big) + (\mathbf{x_2} - \mu_2)^T \big(\mathbf{\Sigma_{22}}^{-1} + \mathbf{\Sigma_{22}}^{-1}\mathbf{\Sigma_{21}}(\mathbf{\Sigma_{11}} - \mathbf{\Sigma_{12}}\mathbf{\Sigma_{22}}^{-1}\mathbf{\Sigma_{21}})^{-1}\mathbf{\Sigma_{12}}\mathbf{\Sigma_{22}}^{-1}\big)
+            \end{bmatrix} \begin{bmatrix} \mathbf{x_1} - \mu_1\\ \mathbf{x_2} - \mu_2 \end{bmatrix}
+    \end{split}
+\end{equation*}</p>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 
 </div>
 </div>
@@ -15634,17 +15693,6 @@ $$ \bar{\mathbf{\mu}} = \mathbf{\mu}_1 + \mathbf{\Sigma_{12}}\mathbf{\Sigma_{22}
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><strong>What did we learn here? For a multivariate Gaussian random variable, the conditional distribution is also Gaussian. Moreover, an analytical formula can be derived for the conditional mean and conditional covariance.</strong></p>
-
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 
 </div>
 </div>
